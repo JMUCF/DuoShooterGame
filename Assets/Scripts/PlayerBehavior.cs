@@ -22,7 +22,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         speed = 4f;
         horizontalScreenLimit = 10.5f;
-        verticalScreenLimit = 6.5f;
+        verticalScreenLimit = 3.5f;
     }
 
     // Update is called once per frame; if your computer runs at 60 fps
@@ -36,9 +36,12 @@ public class PlayerBehavior : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+
+        float halfVerticalLimit = verticalScreenLimit * 0.15f; 
+
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed);
 		
-        if (transform.position.x > horizontalScreenLimit || transform.position.x < -horizontalScreenLimit)
+        if (transform.position.x > horizontalScreenLimit)
         {
             transform.position = new Vector3(-horizontalScreenLimit, transform.position.y, 0);
         }
@@ -47,13 +50,13 @@ public class PlayerBehavior : MonoBehaviour
             transform.position = new Vector3(horizontalScreenLimit, transform.position.y, 0);
         }
 
-        if (transform.position.y > verticalScreenLimit)
+        if (transform.position.y > halfVerticalLimit)
         {
-            transform.position = new Vector3(transform.position.x, -verticalScreenLimit, 0);
+            transform.position = new Vector3(transform.position.x, halfVerticalLimit, 0);
         }
         else if (transform.position.y < -verticalScreenLimit)
         {
-            transform.position = new Vector3(transform.position.x, verticalScreenLimit, 0);
+            transform.position = new Vector3(transform.position.x, (-verticalScreenLimit) , 0);
         }
     }
 
